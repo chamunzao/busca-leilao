@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>BuscaLeilão — Veículos em Leilão no Brasil</title>
+<title>BuscaLeilao</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0a0e1a;--sf:#111827;--sf2:#1a2235;--ac:#3b7eff;--ac2:#00d4aa;--dg:#ff4757;--wn:#ffa502;--tx:#f0f4ff;--mt:#6b7a99;--br:rgba(255,255,255,0.07)}
@@ -68,7 +68,7 @@ main{max-width:900px;margin:0 auto;padding:0 24px 80px}
 .mhd{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
 .mtt{font-family:"Syne",sans-serif;font-weight:800;font-size:20px}
 .mcl{background:var(--sf2);border:1px solid var(--br);border-radius:10px;width:36px;height:36px;cursor:pointer;color:var(--mt);font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.min{background:var(--sf2);border-radius:14px;padding:16px;margin-bottom:16px}
+.min2{background:var(--sf2);border-radius:14px;padding:16px;margin-bottom:16px}
 .ir{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--br);font-size:13px}
 .ir:last-child{border-bottom:none}
 .il{color:var(--mt)}
@@ -85,18 +85,18 @@ main{max-width:900px;margin:0 auto;padding:0 24px 80px}
 </head>
 <body>
 <header>
-  <a href="#" class="logo"><div class="logo-icon">&#128269;</div>BuscaLeilão</a>
+  <a href="#" class="logo"><div class="logo-icon">&#128269;</div>BuscaLeilao</a>
   <div style="display:flex;align-items:center;gap:12px">
-    <div class="sb">API <span id="as">&#9679;&#9679;&#9679;</span></div>
-    <div class="ob" id="ob">&#9889; offline</div>
+    <div class="sb">API <span id="as">...</span></div>
+    <div class="ob" id="ob">offline</div>
   </div>
 </header>
 <div class="hero">
-  <h1>Encontre seu próximo<br><em>veículo em leilão</em></h1>
+  <h1>Encontre seu proximo<br><em>veiculo em leilao</em></h1>
   <p>Busca inteligente em leiloeiros de todo o Brasil.</p>
   <div class="sw">
     <span class="sico">&#128269;</span>
-    <input class="sbar" id="inp" type="text" placeholder="Buscar veículo, leiloeiro...">
+    <input class="sbar" id="inp" type="text" placeholder="Buscar veiculo, leiloeiro...">
     <div class="fzt on" id="fzbtn"><div class="fzd"></div><span class="fzl">~fuzzy</span></div>
   </div>
 </div>
@@ -104,9 +104,9 @@ main{max-width:900px;margin:0 auto;padding:0 24px 80px}
   <div class="flb">Categoria</div>
   <div class="fr" id="cf">
     <div class="pill on" data-cat="Todos">Todos</div>
-    <div class="pill pp" data-cat="Passeio">&#128663; Passeio</div>
-    <div class="pill pv" data-cat="Van/Carga">&#128653; Van/Carga</div>
-    <div class="pill pk" data-cat="Caminhão">&#128667; Caminhão</div>
+    <div class="pill pp" data-cat="Passeio">Passeio</div>
+    <div class="pill pv" data-cat="Van/Carga">Van/Carga</div>
+    <div class="pill pk" data-cat="Caminhao">Caminhao</div>
   </div>
   <div class="flb" style="margin-top:14px">Estado</div>
   <div class="fr" id="sf"></div>
@@ -117,100 +117,111 @@ main{max-width:900px;margin:0 auto;padding:0 24px 80px}
 </main>
 <div class="mo" id="mo"><div class="md"><div id="mc"></div></div></div>
 <script type="text/javascript">
-var API = "https://api-production-e1c0.up.railway.app";
-var MOCK = [
-  {id:"1",name:"Ford Fusion 2.0 Titanium",auctioneer:"Leiloes Lopa",auctioneer_url:"https://lopa.com.br",event_date:"20/04/2025",state:"SP",category:"Passeio",year:"2019",mileage:"62000 km",description:"Motor e cambio em bom estado.",image_url:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600"},
-  {id:"2",name:"Mercedes Sprinter 415 CDI",auctioneer:"Mega Leiloes",auctioneer_url:"https://megaleiloes.com.br",event_date:"22/04/2025",state:"RS",category:"Van/Carga",year:"2020",mileage:"138000 km",description:"Sprinter com bau refrigerado.",image_url:"https://images.unsplash.com/photo-1612534847738-b3af9bc82f2b?w=600"},
-  {id:"3",name:"Toyota Hilux SRX 4x4",auctioneer:"Brasil Leiloes",auctioneer_url:"https://brasilleiloes.com.br",event_date:"25/04/2025",state:"MG",category:"Passeio",year:"2021",mileage:"45000 km",description:"Pneus novos.",image_url:"https://images.unsplash.com/photo-1559416523-140ddc3d238c?w=600"},
-  {id:"4",name:"VW Constellation 24.280",auctioneer:"Brasil Leiloes",auctioneer_url:"https://brasilleiloes.com.br",event_date:"07/05/2025",state:"BA",category:"Caminhao",year:"2016",mileage:"410000 km",description:"Motor revisado.",image_url:"https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600"},
-  {id:"5",name:"Ford Cargo 1723",auctioneer:"Mega Leiloes",auctioneer_url:"https://megaleiloes.com.br",event_date:"10/05/2025",state:"SP",category:"Caminhao",year:"2015",mileage:"520000 km",description:"Truck com graneis."},
-  {id:"6",name:"Honda HR-V EXL CVT",auctioneer:"Lance Certo",auctioneer_url:"https://lancecerto.com.br",event_date:"30/04/2025",state:"RJ",category:"Passeio",year:"2022",mileage:"28000 km",description:"Seminovo.",image_url:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=600"},
-  {id:"7",name:"Renault Master Furgao",auctioneer:"Arremate Facil",auctioneer_url:"https://arrematefacil.com.br",event_date:"12/05/2025",state:"SC",category:"Van/Carga",year:"2019",mileage:"195000 km",description:"Furgao longo.",image_url:"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600"}
+var API="https://api-production-e1c0.up.railway.app";
+var MOCK=[
+{id:"1",name:"Ford Fusion 2.0 Titanium",auctioneer:"Leiloes Lopa",auctioneer_url:"https://lopa.com.br",event_date:"20/04/2025",state:"SP",category:"Passeio",year:"2019",mileage:"62000 km",description:"Motor em bom estado.",image_url:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600"},
+{id:"2",name:"Mercedes Sprinter 415",auctioneer:"Mega Leiloes",auctioneer_url:"https://megaleiloes.com.br",event_date:"22/04/2025",state:"RS",category:"Van/Carga",year:"2020",mileage:"138000 km",description:"Bau refrigerado.",image_url:"https://images.unsplash.com/photo-1612534847738-b3af9bc82f2b?w=600"},
+{id:"3",name:"Toyota Hilux SRX 4x4",auctioneer:"Brasil Leiloes",auctioneer_url:"https://brasilleiloes.com.br",event_date:"25/04/2025",state:"MG",category:"Passeio",year:"2021",mileage:"45000 km",description:"Pneus novos.",image_url:"https://images.unsplash.com/photo-1559416523-140ddc3d238c?w=600"},
+{id:"4",name:"VW Constellation 24.280",auctioneer:"Brasil Leiloes",auctioneer_url:"https://brasilleiloes.com.br",event_date:"07/05/2025",state:"BA",category:"Caminhao",year:"2016",mileage:"410000 km",description:"Motor revisado.",image_url:"https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600"},
+{id:"5",name:"Ford Cargo 1723",auctioneer:"Mega Leiloes",auctioneer_url:"https://megaleiloes.com.br",event_date:"10/05/2025",state:"SP",category:"Caminhao",year:"2015",mileage:"520000 km",description:"Truck graneis."},
+{id:"6",name:"Honda HR-V EXL",auctioneer:"Lance Certo",auctioneer_url:"https://lancecerto.com.br",event_date:"30/04/2025",state:"RJ",category:"Passeio",year:"2022",mileage:"28000 km",description:"Seminovo.",image_url:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=600"},
+{id:"7",name:"Renault Master Furgao",auctioneer:"Arremate Facil",auctioneer_url:"https://arrematefacil.com.br",event_date:"12/05/2025",state:"SC",category:"Van/Carga",year:"2019",mileage:"195000 km",description:"Furgao longo.",image_url:"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600"}
 ];
-var vehicles = [], favs = JSON.parse(localStorage.getItem("favs") || "[]");
-var mock = false, cat = "Todos", uf = "Todos", fz = true, q = "", dt;
-function load() {
-  document.getElementById("gc").innerHTML = '<div class="ld"><div class="sp"></div><span>Buscando...</span></div>';
-  var p = new URLSearchParams();
-  if (q) p.set("q", q);
-  if (uf !== "Todos") p.set("state", uf);
-  if (cat !== "Todos") p.set("category", cat);
-  p.set("fuzzy", fz); p.set("page_size", "50");
-  fetch(API + "/vehicles/?" + p)
-    .then(function(r) { if (!r.ok) throw new Error("err"); return r.json(); })
-    .then(function(d) {
-      vehicles = d.results; mock = false;
-      document.getElementById("as").textContent = "online";
-      document.getElementById("as").style.color = "#00d4aa";
+var vehicles=[],favs=JSON.parse(localStorage.getItem("favs")||"[]"),mock=false,cat="Todos",uf="Todos",fz=true,q="",dt;
+function load(){
+  document.getElementById("gc").innerHTML='<div class="ld"><div class="sp"></div><span>Buscando...</span></div>';
+  var p=new URLSearchParams();
+  if(q)p.set("q",q);
+  if(uf!=="Todos")p.set("state",uf);
+  if(cat!=="Todos")p.set("category",cat);
+  p.set("fuzzy",fz);p.set("page_size","50");
+  fetch(API+"/vehicles/?"+p)
+    .then(function(r){if(!r.ok)throw 0;return r.json();})
+    .then(function(d){
+      vehicles=d.results;mock=false;
+      document.getElementById("as").textContent="online";
+      document.getElementById("as").style.color="#00d4aa";
       document.getElementById("ob").classList.remove("show");
       render();
     })
-    .catch(function() {
-      mock = true;
-      document.getElementById("as").textContent = "offline";
-      document.getElementById("as").style.color = "#ffa502";
+    .catch(function(){
+      mock=true;
+      document.getElementById("as").textContent="offline";
+      document.getElementById("as").style.color="#ffa502";
       document.getElementById("ob").classList.add("show");
-      var lq = q.toLowerCase();
-      vehicles = MOCK.filter(function(v) {
-        return (cat === "Todos" || v.category === cat) && (uf === "Todos" || v.state === uf) &&
-               (!lq || v.name.toLowerCase().indexOf(lq) > -1 || v.auctioneer.toLowerCase().indexOf(lq) > -1);
+      var lq=q.toLowerCase();
+      vehicles=MOCK.filter(function(v){
+        return (cat==="Todos"||v.category===cat)&&(uf==="Todos"||v.state===uf)&&(!lq||v.name.toLowerCase().indexOf(lq)>-1);
       });
       render();
     });
 }
-function ctag(c) {
-  var m = {"Passeio":"tp","Van/Carga":"tv","Caminhao":"tk","Caminhão":"tk"};
-  return '<span class="tag ' + (m[c] || "ty") + '">' + c + '</span>';
-}
-function cimg(v, h, ph) {
-  if (v.image_url) return '<img class="cimg" src="' + v.image_url + '" style="height:' + h + 'px" loading="lazy" onerror="this.style.display='none'">';
-  return '<div class="nimg" style="height:' + h + 'px;font-size:' + ph + 'px">&#128663;</div>';
-}
-function render() {
-  var demo = mock ? ' <span style="color:var(--wn);font-size:11px">(demo)</span>' : "";
-  document.getElementById("rc").innerHTML = "<b>" + vehicles.length + "</b> veiculo" + (vehicles.length !== 1 ? "s" : "") + " encontrado" + (vehicles.length !== 1 ? "s" : "") + demo;
-  if (!vehicles.length) { document.getElementById("gc").innerHTML = '<div class="em"><h3>Nenhum veiculo encontrado</h3><p>Ajuste os filtros</p></div>'; return; }
-  var h = '<div class="grid">';
-  for (var i = 0; i < vehicles.length; i++) {
-    var v = vehicles[i];
-    var faved = favs.indexOf(v.id) > -1;
-    h += '<div class="card" onclick="om('' + v.id + '')">' + cimg(v,160,36) + '<div class="cb"><div class="ctop"><div class="cn">' + v.name + '</div><button class="fb" onclick="fv(event,'' + v.id + '')">' + (faved?"&#10084;&#65039;":"&#129293;") + '</button></div><div class="tags"><span class="tag ts">' + v.state + '</span>' + ctag(v.category) + (v.year?'<span class="tag ty">'+v.year+'</span>':"") + '</div><div class="mt2">&#127963; ' + v.auctioneer + '</div><div class="mt2">&#128197; ' + v.event_date + '</div></div></div>';
+function ctag(c){var m={Passeio:"tp","Van/Carga":"tv",Caminhao:"tk"};return'<span class="tag '+(m[c]||"ty")+'">'+c+'</span>';}
+function render(){
+  var demo=mock?' <span style="color:var(--wn);font-size:11px">(demo)</span>':"";
+  document.getElementById("rc").innerHTML="<b>"+vehicles.length+"</b> veiculo"+(vehicles.length!==1?"s":"")+" encontrado"+(vehicles.length!==1?"s":"")+demo;
+  if(!vehicles.length){document.getElementById("gc").innerHTML='<div class="em"><h3>Nenhum veiculo encontrado</h3><p>Ajuste os filtros</p></div>';return;}
+  var h='<div class="grid">';
+  for(var i=0;i<vehicles.length;i++){
+    var v=vehicles[i];
+    var faved=favs.indexOf(v.id)>-1;
+    var imgHtml=v.image_url?'<img class="cimg" src="'+v.image_url+'" style="height:160px" loading="lazy">'
+                            :'<div class="nimg">&#128663;</div>';
+    h+='<div class="card" onclick="om(''+v.id+'')">';
+    h+=imgHtml;
+    h+='<div class="cb"><div class="ctop"><div class="cn">'+v.name+'</div>';
+    h+='<button class="fb" onclick="fv(event,''+v.id+'')">'+(faved?"&#10084;":"&#9825;")+'</button></div>';
+    h+='<div class="tags"><span class="tag ts">'+v.state+'</span>'+ctag(v.category);
+    if(v.year)h+='<span class="tag ty">'+v.year+'</span>';
+    h+='</div><div class="mt2">&#127963; '+v.auctioneer+'</div><div class="mt2">&#128197; '+v.event_date+'</div>';
+    h+='</div></div>';
   }
-  document.getElementById("gc").innerHTML = h + '</div>';
+  document.getElementById("gc").innerHTML=h+'</div>';
 }
-function om(id) {
-  var v = null;
-  for (var i = 0; i < vehicles.length; i++) { if (vehicles[i].id === id) { v = vehicles[i]; break; } }
-  if (!v) return;
-  var url = v.auctioneer_url || "#";
-  var h = (v.image_url ? '<img class="mdi" src="' + v.image_url + '">' : '<div class="mni">&#128663;</div>');
-  h += '<div class="mbd"><div class="mhd"><div><div class="mtt">' + v.name + '</div><div class="tags" style="margin-top:8px"><span class="tag ts">' + v.state + '</span>' + ctag(v.category) + (v.year?'<span class="tag ty">'+v.year+'</span>':"") + '</div></div><button class="mcl" onclick="cm()">&#10005;</button></div>';
-  h += '<div class="min"><div class="ir"><span class="il">Leiloeiro</span><span class="iv">' + v.auctioneer + '</span></div><div class="ir"><span class="il">Data</span><span class="iv">' + v.event_date + '</span></div>' + (v.mileage?'<div class="ir"><span class="il">Km</span><span class="iv">' + v.mileage + '</span></div>':"") + '</div>';
-  if (v.description) h += '<div class="dsc">' + v.description + '</div>';
-  h += '<a href="' + url + '" target="_blank" class="be">&#128279; Ver Edital Oficial</a></div>';
-  document.getElementById("mc").innerHTML = h;
+function om(id){
+  var v=null;
+  for(var i=0;i<vehicles.length;i++){if(vehicles[i].id===id){v=vehicles[i];break;}}
+  if(!v)return;
+  var imgHtml=v.image_url?'<img class="mdi" src="'+v.image_url+'">'
+                          :'<div class="mni">&#128663;</div>';
+  var h=imgHtml+'<div class="mbd"><div class="mhd"><div><div class="mtt">'+v.name+'</div>';
+  h+='<div class="tags" style="margin-top:8px"><span class="tag ts">'+v.state+'</span>'+ctag(v.category);
+  if(v.year)h+='<span class="tag ty">'+v.year+'</span>';
+  h+='</div></div><button class="mcl" onclick="cm()">&#10005;</button></div>';
+  h+='<div class="min2">';
+  h+='<div class="ir"><span class="il">Leiloeiro</span><span class="iv">'+v.auctioneer+'</span></div>';
+  h+='<div class="ir"><span class="il">Data</span><span class="iv">'+v.event_date+'</span></div>';
+  if(v.mileage)h+='<div class="ir"><span class="il">Km</span><span class="iv">'+v.mileage+'</span></div>';
+  h+='</div>';
+  if(v.description)h+='<div class="dsc">'+v.description+'</div>';
+  h+='<a href="'+(v.auctioneer_url||"#")+'" target="_blank" class="be">&#128279; Ver Edital Oficial</a></div>';
+  document.getElementById("mc").innerHTML=h;
   document.getElementById("mo").classList.add("open");
-  document.body.style.overflow = "hidden";
+  document.body.style.overflow="hidden";
 }
-function cm() { document.getElementById("mo").classList.remove("open"); document.body.style.overflow = ""; }
-function fv(e, id) {
+function cm(){document.getElementById("mo").classList.remove("open");document.body.style.overflow="";}
+function fv(e,id){
   e.stopPropagation();
-  var idx = favs.indexOf(id);
-  if (idx > -1) { favs.splice(idx,1); } else { favs.push(id); }
-  localStorage.setItem("favs", JSON.stringify(favs)); render();
+  var idx=favs.indexOf(id);
+  if(idx>-1){favs.splice(idx,1);}else{favs.push(id);}
+  localStorage.setItem("favs",JSON.stringify(favs));render();
 }
-var states = ["Todos"];
-for (var i = 0; i < MOCK.length; i++) { if (states.indexOf(MOCK[i].state) < 0) states.push(MOCK[i].state); }
-states.sort(function(a,b){ return a==="Todos"?-1:a.localeCompare(b); });
-var sfh = "";
-for (var i = 0; i < states.length; i++) { sfh += '<div class="pill' + (states[i]===uf?" on":"") + '" data-state="' + states[i] + '">' + states[i] + '</div>'; }
-document.getElementById("sf").innerHTML = sfh;
-document.getElementById("sf").querySelectorAll(".pill").forEach(function(p){ p.addEventListener("click",function(){ uf=p.dataset.state; document.getElementById("sf").querySelectorAll(".pill").forEach(function(x){x.classList.remove("on");}); p.classList.add("on"); load(); }); });
-document.getElementById("cf").querySelectorAll(".pill").forEach(function(p){ p.addEventListener("click",function(){ cat=p.dataset.cat; document.getElementById("cf").querySelectorAll(".pill").forEach(function(x){x.classList.remove("on");}); p.classList.add("on"); load(); }); });
-document.getElementById("inp").addEventListener("input",function(e){ q=e.target.value.trim(); clearTimeout(dt); dt=setTimeout(load,350); });
-document.getElementById("fzbtn").addEventListener("click",function(){ fz=!fz; document.getElementById("fzbtn").classList.toggle("on",fz); if(q)load(); });
-document.getElementById("mo").addEventListener("click",function(e){ if(e.target===document.getElementById("mo"))cm(); });
-document.addEventListener("keydown",function(e){ if(e.key==="Escape")cm(); });
+var states=["Todos"];
+for(var i=0;i<MOCK.length;i++){if(states.indexOf(MOCK[i].state)<0)states.push(MOCK[i].state);}
+states.sort(function(a,b){return a==="Todos"?-1:a.localeCompare(b);});
+var sfh="";
+for(var i=0;i<states.length;i++){sfh+='<div class="pill'+(states[i]===uf?" on":"")+'" data-state="'+states[i]+'">'+states[i]+'</div>';}
+document.getElementById("sf").innerHTML=sfh;
+document.getElementById("sf").querySelectorAll(".pill").forEach(function(p){
+  p.addEventListener("click",function(){uf=p.dataset.state;document.getElementById("sf").querySelectorAll(".pill").forEach(function(x){x.classList.remove("on");});p.classList.add("on");load();});
+});
+document.getElementById("cf").querySelectorAll(".pill").forEach(function(p){
+  p.addEventListener("click",function(){cat=p.dataset.cat;document.getElementById("cf").querySelectorAll(".pill").forEach(function(x){x.classList.remove("on");});p.classList.add("on");load();});
+});
+document.getElementById("inp").addEventListener("input",function(e){q=e.target.value.trim();clearTimeout(dt);dt=setTimeout(load,350);});
+document.getElementById("fzbtn").addEventListener("click",function(){fz=!fz;document.getElementById("fzbtn").classList.toggle("on",fz);if(q)load();});
+document.getElementById("mo").addEventListener("click",function(e){if(e.target===document.getElementById("mo"))cm();});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")cm();});
 load();
 </script>
 </body>
