@@ -3,183 +3,214 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>BuscaLeilao</title>
+<title>BuscaLeilão — Veículos em Leilão no Brasil</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0e1a;--surface:#111827;--accent:#3b7eff;--accent2:#00d4aa;--danger:#ff4757;--warn:#ffa502;--text:#f0f4ff;--muted:#6b7a99;--border:rgba(255,255,255,0.07)}
+:root{--bg:#0a0e1a;--sf:#111827;--sf2:#1a2235;--ac:#3b7eff;--ac2:#00d4aa;--dg:#ff4757;--wn:#ffa502;--tx:#f0f4ff;--mt:#6b7a99;--br:rgba(255,255,255,0.07)}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-header{position:sticky;top:0;z-index:100;background:rgba(10,14,26,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--text);display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center}
-.stat-badge{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--muted)}
-.stat-badge span{color:var(--accent2);font-weight:600}
-.offline-badge{background:rgba(255,165,2,.15);border:1px solid rgba(255,165,2,.3);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--warn);display:none}
-.offline-badge.show{display:block}
+body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+header{position:sticky;top:0;z-index:100;background:rgba(10,14,26,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--br);padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:"Syne",sans-serif;font-weight:800;font-size:20px;color:var(--tx);display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--ac),var(--ac2));border-radius:10px;display:flex;align-items:center;justify-content:center}
+.sb{background:var(--sf);border:1px solid var(--br);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--mt)}
+.sb span{color:var(--ac2);font-weight:600}
+.ob{background:rgba(255,165,2,.15);border:1px solid rgba(255,165,2,.3);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--wn);display:none}
+.ob.show{display:block}
 .hero{padding:60px 24px 40px;max-width:900px;margin:0 auto;text-align:center}
-.hero h1{font-family:'Syne',sans-serif;font-size:clamp(32px,6vw,52px);font-weight:800;line-height:1.1;margin-bottom:16px}
-.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{color:var(--muted);font-size:16px;margin-bottom:36px}
-.search-wrap{position:relative;max-width:640px;margin:0 auto 32px}
-.search-bar{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px 130px 16px 52px;font-size:15px;color:var(--text);font-family:'DM Sans',sans-serif;outline:none}
-.search-bar::placeholder{color:var(--muted)}
-.search-bar:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,126,255,.15)}
-.search-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:18px;pointer-events:none}
-.fuzzy-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:8px;background:#1a2235;border:1px solid var(--border);border-radius:10px;padding:6px 12px;cursor:pointer;user-select:none}
-.fuzzy-toggle.active{background:rgba(59,126,255,.15);border-color:rgba(59,126,255,.4)}
-.fuzzy-label{font-size:11px;font-weight:600;color:var(--muted)}
-.fuzzy-toggle.active .fuzzy-label{color:var(--accent)}
-.fuzzy-dot{width:6px;height:6px;border-radius:50%;background:var(--muted)}
-.fuzzy-toggle.active .fuzzy-dot{background:var(--accent)}
+.hero h1{font-family:"Syne",sans-serif;font-size:clamp(32px,6vw,52px);font-weight:800;line-height:1.1;margin-bottom:16px}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--ac),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--mt);font-size:16px;margin-bottom:36px}
+.sw{position:relative;max-width:640px;margin:0 auto 32px}
+.sbar{width:100%;background:var(--sf);border:1px solid var(--br);border-radius:16px;padding:16px 130px 16px 52px;font-size:15px;color:var(--tx);font-family:"DM Sans",sans-serif;outline:none}
+.sbar::placeholder{color:var(--mt)}
+.sbar:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(59,126,255,.15)}
+.sico{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--mt);font-size:18px;pointer-events:none}
+.fzt{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:8px;background:var(--sf2);border:1px solid var(--br);border-radius:10px;padding:6px 12px;cursor:pointer;user-select:none}
+.fzt.on{background:rgba(59,126,255,.15);border-color:rgba(59,126,255,.4)}
+.fzl{font-size:11px;font-weight:600;color:var(--mt)}
+.fzt.on .fzl{color:var(--ac)}
+.fzd{width:6px;height:6px;border-radius:50%;background:var(--mt)}
+.fzt.on .fzd{background:var(--ac)}
 .filters{max-width:900px;margin:0 auto 32px;padding:0 24px}
-.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-.filter-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:500;margin-bottom:8px}
-.pill{padding:7px 16px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap;font-family:'DM Sans',sans-serif}
-.pill.active{background:var(--accent);border-color:var(--accent);color:#fff}
-.pill.cat-van.active{background:#f59e0b;border-color:#f59e0b}
-.pill.cat-truck.active{background:var(--danger);border-color:var(--danger)}
-.pill.cat-pass.active{background:var(--accent2);border-color:var(--accent2);color:#0a0e1a}
+.fr{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.flb{font-size:11px;color:var(--mt);text-transform:uppercase;letter-spacing:.08em;font-weight:500;margin-bottom:8px}
+.pill{padding:7px 16px;border-radius:20px;border:1px solid var(--br);background:var(--sf);color:var(--mt);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:"DM Sans",sans-serif;transition:all .15s}
+.pill.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.pill.pv.on{background:#f59e0b;border-color:#f59e0b}
+.pill.pk.on{background:var(--dg);border-color:var(--dg)}
+.pill.pp.on{background:var(--ac2);border-color:var(--ac2);color:#0a0e1a}
 main{max-width:900px;margin:0 auto;padding:0 24px 80px}
-.rc{font-size:13px;color:var(--muted);margin-bottom:20px}
-.rc strong{color:var(--text)}
+#rc{font-size:13px;color:var(--mt);margin-bottom:20px}
+#rc b{color:var(--tx)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s;animation:fadeUp .4s ease both}
+.card{background:var(--sf);border:1px solid var(--br);border-radius:18px;overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s}
 .card:hover{transform:translateY(-4px);border-color:rgba(59,126,255,.3);box-shadow:0 12px 40px rgba(0,0,0,.4)}
-.card-img{width:100%;height:160px;object-fit:cover;display:block}
-.card-img-ph{width:100%;height:160px;background:#1a2235;display:flex;align-items:center;justify-content:center;font-size:36px;color:var(--muted)}
-.card-body{padding:14px 16px 16px}
-.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px}
-.card-name{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;line-height:1.3;color:var(--text)}
-.fav-btn{background:none;border:none;cursor:pointer;font-size:18px;padding:2px;opacity:.7;line-height:1;flex-shrink:0}
-.fav-btn:hover{opacity:1}
-.card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.cimg{width:100%;height:160px;object-fit:cover;display:block}
+.nimg{width:100%;height:160px;background:var(--sf2);display:flex;align-items:center;justify-content:center;font-size:36px}
+.cb{padding:14px 16px 16px}
+.ctop{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px}
+.cn{font-family:"Syne",sans-serif;font-weight:700;font-size:15px;line-height:1.3;color:var(--tx)}
+.fb{background:none;border:none;cursor:pointer;font-size:18px;padding:2px;opacity:.7;line-height:1;flex-shrink:0}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
 .tag{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
-.tag-state{background:rgba(59,126,255,.15);color:var(--accent)}
-.tag-pass{background:rgba(0,212,170,.12);color:var(--accent2)}
-.tag-van{background:rgba(245,158,11,.15);color:#f59e0b}
-.tag-truck{background:rgba(255,71,87,.12);color:var(--danger)}
-.tag-y{background:#1a2235;color:var(--muted)}
-.meta{font-size:12px;color:var(--muted);margin-bottom:3px}
-.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:24px}
-.modal-overlay.open{display:flex}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:24px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto}
-.modal-img{width:100%;height:220px;object-fit:cover;border-radius:24px 24px 0 0;display:block}
-.modal-img-ph{width:100%;height:220px;background:#1a2235;display:flex;align-items:center;justify-content:center;font-size:56px;border-radius:24px 24px 0 0}
-.modal-body{padding:24px}
-.modal-hdr{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
-.modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:20px}
-.modal-close{background:#1a2235;border:1px solid var(--border);border-radius:10px;width:36px;height:36px;cursor:pointer;color:var(--muted);font-size:18px;display:flex;align-items:center;justify-content:center}
-.modal-info{background:#1a2235;border-radius:14px;padding:16px;margin-bottom:16px}
-.info-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
-.info-row:last-child{border-bottom:none}
-.info-label{color:var(--muted)}
-.info-value{font-weight:500;color:var(--text)}
-.modal-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:20px;padding:14px;background:#1a2235;border-radius:12px}
-.btn-edital{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px;background:linear-gradient(135deg,var(--accent),#2563eb);border:none;border-radius:14px;color:#fff;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none}
-.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 0;gap:16px;color:var(--muted)}
-.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
-.empty{text-align:center;padding:80px 0;color:var(--muted)}
-.empty h3{font-family:'Syne',sans-serif;color:var(--text);margin-bottom:8px}
+.ts{background:rgba(59,126,255,.15);color:var(--ac)}
+.tp{background:rgba(0,212,170,.12);color:var(--ac2)}
+.tv{background:rgba(245,158,11,.15);color:#f59e0b}
+.tk{background:rgba(255,71,87,.12);color:var(--dg)}
+.ty{background:var(--sf2);color:var(--mt)}
+.mt2{font-size:12px;color:var(--mt);margin-bottom:3px}
+.mo{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:24px}
+.mo.open{display:flex}
+.md{background:var(--sf);border:1px solid var(--br);border-radius:24px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto}
+.mdi{width:100%;height:220px;object-fit:cover;border-radius:24px 24px 0 0;display:block}
+.mni{width:100%;height:220px;background:var(--sf2);display:flex;align-items:center;justify-content:center;font-size:56px;border-radius:24px 24px 0 0}
+.mbd{padding:24px}
+.mhd{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
+.mtt{font-family:"Syne",sans-serif;font-weight:800;font-size:20px}
+.mcl{background:var(--sf2);border:1px solid var(--br);border-radius:10px;width:36px;height:36px;cursor:pointer;color:var(--mt);font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.min{background:var(--sf2);border-radius:14px;padding:16px;margin-bottom:16px}
+.ir{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--br);font-size:13px}
+.ir:last-child{border-bottom:none}
+.il{color:var(--mt)}
+.iv{font-weight:500;color:var(--tx)}
+.dsc{font-size:13px;color:var(--mt);line-height:1.6;margin-bottom:20px;padding:14px;background:var(--sf2);border-radius:12px}
+.be{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px;background:linear-gradient(135deg,var(--ac),#2563eb);border:none;border-radius:14px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;font-family:"DM Sans",sans-serif}
+.ld{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 0;gap:16px;color:var(--mt)}
+.sp{width:36px;height:36px;border:3px solid var(--br);border-top-color:var(--ac);border-radius:50%;animation:spin .7s linear infinite}
+.em{text-align:center;padding:80px 0;color:var(--mt)}
+.em h3{font-family:"Syne",sans-serif;color:var(--tx);margin-bottom:8px}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:600px){.hero{padding:40px 16px 28px}.filters{padding:0 16px}main{padding:0 16px 60px}.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <header>
-  <a href="#" class="logo"><div class="logo-icon">🔍</div>BuscaLeilão</a>
+  <a href="#" class="logo"><div class="logo-icon">&#128269;</div>BuscaLeilão</a>
   <div style="display:flex;align-items:center;gap:12px">
-    <div class="stat-badge">API <span id="as">•••</span></div>
-    <div class="offline-badge" id="ob">⚡ offline</div>
+    <div class="sb">API <span id="as">&#9679;&#9679;&#9679;</span></div>
+    <div class="ob" id="ob">&#9889; offline</div>
   </div>
 </header>
 <div class="hero">
   <h1>Encontre seu próximo<br><em>veículo em leilão</em></h1>
   <p>Busca inteligente em leiloeiros de todo o Brasil.</p>
-  <div class="search-wrap">
-    <span class="search-icon">🔍</span>
-    <input class="search-bar" id="si" type="text" placeholder="Buscar veículo, leiloeiro...">
-    <div class="fuzzy-toggle active" id="ft"><div class="fuzzy-dot"></div><span class="fuzzy-label">~fuzzy</span></div>
+  <div class="sw">
+    <span class="sico">&#128269;</span>
+    <input class="sbar" id="inp" type="text" placeholder="Buscar veículo, leiloeiro...">
+    <div class="fzt on" id="fzbtn"><div class="fzd"></div><span class="fzl">~fuzzy</span></div>
   </div>
 </div>
 <div class="filters">
-  <div class="filter-label">Categoria</div>
-  <div class="filter-row" id="cf">
-    <div class="pill active" data-cat="Todos">Todos</div>
-    <div class="pill cat-pass" data-cat="Passeio">🚗 Passeio</div>
-    <div class="pill cat-van" data-cat="Van/Carga">🚐 Van/Carga</div>
-    <div class="pill cat-truck" data-cat="Caminhão">🚛 Caminhão</div>
+  <div class="flb">Categoria</div>
+  <div class="fr" id="cf">
+    <div class="pill on" data-cat="Todos">Todos</div>
+    <div class="pill pp" data-cat="Passeio">&#128663; Passeio</div>
+    <div class="pill pv" data-cat="Van/Carga">&#128653; Van/Carga</div>
+    <div class="pill pk" data-cat="Caminhão">&#128667; Caminhão</div>
   </div>
-  <div class="filter-label" style="margin-top:14px">Estado</div>
-  <div class="filter-row" id="sf"></div>
+  <div class="flb" style="margin-top:14px">Estado</div>
+  <div class="fr" id="sf"></div>
 </div>
 <main>
-  <div class="rc" id="rc">Carregando...</div>
-  <div id="gc"><div class="loading"><div class="spinner"></div><span>Buscando...</span></div></div>
+  <div id="rc">Carregando...</div>
+  <div id="gc"><div class="ld"><div class="sp"></div><span>Buscando...</span></div></div>
 </main>
-<div class="modal-overlay" id="mo"><div class="modal"><div id="mc"></div></div></div>
-<script>
-const API='https://api-production-e1c0.up.railway.app';
-const MOCK=[
-{id:'1',name:'Ford Fusion 2.0 Titanium',auctioneer:'Leilões Lopa',auctioneer_url:'https://lopa.com.br',event_date:'20/04/2025',state:'SP',category:'Passeio',year:'2019',mileage:'62000 km',description:'Motor e câmbio em bom estado.',image_url:'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600'},
-{id:'2',name:'Mercedes Sprinter 415 CDI',auctioneer:'Mega Leilões',auctioneer_url:'https://megaleiloes.com.br',event_date:'22/04/2025',state:'RS',category:'Van/Carga',year:'2020',mileage:'138000 km',description:'Sprinter com baú refrigerado.',image_url:'https://images.unsplash.com/photo-1612534847738-b3af9bc82f2b?w=600'},
-{id:'3',name:'Toyota Hilux SRX 4x4',auctioneer:'Brasil Leilões',auctioneer_url:'https://brasilleiloes.com.br',event_date:'25/04/2025',state:'MG',category:'Passeio',year:'2021',mileage:'45000 km',description:'Pneus novos.',image_url:'https://images.unsplash.com/photo-1559416523-140ddc3d238c?w=600'},
-{id:'4',name:'VW Constellation 24.280',auctioneer:'Brasil Leilões',auctioneer_url:'https://brasilleiloes.com.br',event_date:'07/05/2025',state:'BA',category:'Caminhão',year:'2016',mileage:'410000 km',description:'Motor revisado.',image_url:'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600'},
-{id:'5',name:'Ford Cargo 1723',auctioneer:'Mega Leilões',auctioneer_url:'https://megaleiloes.com.br',event_date:'10/05/2025',state:'SP',category:'Caminhão',year:'2015',mileage:'520000 km',description:'Truck com granéis.'},
-{id:'6',name:'Honda HR-V EXL CVT',auctioneer:'Lance Certo',auctioneer_url:'https://lancecerto.com.br',event_date:'30/04/2025',state:'RJ',category:'Passeio',year:'2022',mileage:'28000 km',description:'HR-V seminovo.',image_url:'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=600'},
-{id:'7',name:'Renault Master Furgão',auctioneer:'Arremate Fácil',auctioneer_url:'https://arrematefacil.com.br',event_date:'12/05/2025',state:'SC',category:'Van/Carga',year:'2019',mileage:'195000 km',description:'Master furgão longo.',image_url:'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600'}
+<div class="mo" id="mo"><div class="md"><div id="mc"></div></div></div>
+<script type="text/javascript">
+var API = "https://api-production-e1c0.up.railway.app";
+var MOCK = [
+  {id:"1",name:"Ford Fusion 2.0 Titanium",auctioneer:"Leiloes Lopa",auctioneer_url:"https://lopa.com.br",event_date:"20/04/2025",state:"SP",category:"Passeio",year:"2019",mileage:"62000 km",description:"Motor e cambio em bom estado.",image_url:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600"},
+  {id:"2",name:"Mercedes Sprinter 415 CDI",auctioneer:"Mega Leiloes",auctioneer_url:"https://megaleiloes.com.br",event_date:"22/04/2025",state:"RS",category:"Van/Carga",year:"2020",mileage:"138000 km",description:"Sprinter com bau refrigerado.",image_url:"https://images.unsplash.com/photo-1612534847738-b3af9bc82f2b?w=600"},
+  {id:"3",name:"Toyota Hilux SRX 4x4",auctioneer:"Brasil Leiloes",auctioneer_url:"https://brasilleiloes.com.br",event_date:"25/04/2025",state:"MG",category:"Passeio",year:"2021",mileage:"45000 km",description:"Pneus novos.",image_url:"https://images.unsplash.com/photo-1559416523-140ddc3d238c?w=600"},
+  {id:"4",name:"VW Constellation 24.280",auctioneer:"Brasil Leiloes",auctioneer_url:"https://brasilleiloes.com.br",event_date:"07/05/2025",state:"BA",category:"Caminhao",year:"2016",mileage:"410000 km",description:"Motor revisado.",image_url:"https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600"},
+  {id:"5",name:"Ford Cargo 1723",auctioneer:"Mega Leiloes",auctioneer_url:"https://megaleiloes.com.br",event_date:"10/05/2025",state:"SP",category:"Caminhao",year:"2015",mileage:"520000 km",description:"Truck com graneis."},
+  {id:"6",name:"Honda HR-V EXL CVT",auctioneer:"Lance Certo",auctioneer_url:"https://lancecerto.com.br",event_date:"30/04/2025",state:"RJ",category:"Passeio",year:"2022",mileage:"28000 km",description:"Seminovo.",image_url:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=600"},
+  {id:"7",name:"Renault Master Furgao",auctioneer:"Arremate Facil",auctioneer_url:"https://arrematefacil.com.br",event_date:"12/05/2025",state:"SC",category:"Van/Carga",year:"2019",mileage:"195000 km",description:"Furgao longo.",image_url:"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600"}
 ];
-let vehicles=[],favs=JSON.parse(localStorage.getItem('favs')||'[]'),mock=false,cat='Todos',uf='Todos',fz=true,q='',dt;
-async function load(){
-  document.getElementById('gc').innerHTML='<div class="loading"><div class="spinner"></div><span>Buscando...</span></div>';
-  const p=new URLSearchParams();
-  if(q)p.set('q',q);
-  if(uf!=='Todos')p.set('state',uf);
-  if(cat!=='Todos')p.set('category',cat);
-  p.set('fuzzy',fz);p.set('page_size','50');
-  try{
-    const r=await fetch(API+'/vehicles/?'+p);
-    if(!r.ok)throw 0;
-    const d=await r.json();
-    vehicles=d.results;mock=false;
-    document.getElementById('as').textContent='✓ online';
-    document.getElementById('as').style.color='#00d4aa';
-    document.getElementById('ob').classList.remove('show');
-  }catch{
-    mock=true;
-    document.getElementById('as').textContent='⚠ offline';
-    document.getElementById('as').style.color='#ffa502';
-    document.getElementById('ob').classList.add('show');
-    const lq=q.toLowerCase();
-    vehicles=MOCK.filter(v=>(cat==='Todos'||v.category===cat)&&(uf==='Todos'||v.state===uf)&&(!lq||v.name.toLowerCase().includes(lq)||v.auctioneer.toLowerCase().includes(lq)));
+var vehicles = [], favs = JSON.parse(localStorage.getItem("favs") || "[]");
+var mock = false, cat = "Todos", uf = "Todos", fz = true, q = "", dt;
+function load() {
+  document.getElementById("gc").innerHTML = '<div class="ld"><div class="sp"></div><span>Buscando...</span></div>';
+  var p = new URLSearchParams();
+  if (q) p.set("q", q);
+  if (uf !== "Todos") p.set("state", uf);
+  if (cat !== "Todos") p.set("category", cat);
+  p.set("fuzzy", fz); p.set("page_size", "50");
+  fetch(API + "/vehicles/?" + p)
+    .then(function(r) { if (!r.ok) throw new Error("err"); return r.json(); })
+    .then(function(d) {
+      vehicles = d.results; mock = false;
+      document.getElementById("as").textContent = "online";
+      document.getElementById("as").style.color = "#00d4aa";
+      document.getElementById("ob").classList.remove("show");
+      render();
+    })
+    .catch(function() {
+      mock = true;
+      document.getElementById("as").textContent = "offline";
+      document.getElementById("as").style.color = "#ffa502";
+      document.getElementById("ob").classList.add("show");
+      var lq = q.toLowerCase();
+      vehicles = MOCK.filter(function(v) {
+        return (cat === "Todos" || v.category === cat) && (uf === "Todos" || v.state === uf) &&
+               (!lq || v.name.toLowerCase().indexOf(lq) > -1 || v.auctioneer.toLowerCase().indexOf(lq) > -1);
+      });
+      render();
+    });
+}
+function ctag(c) {
+  var m = {"Passeio":"tp","Van/Carga":"tv","Caminhao":"tk","Caminhão":"tk"};
+  return '<span class="tag ' + (m[c] || "ty") + '">' + c + '</span>';
+}
+function cimg(v, h, ph) {
+  if (v.image_url) return '<img class="cimg" src="' + v.image_url + '" style="height:' + h + 'px" loading="lazy" onerror="this.style.display='none'">';
+  return '<div class="nimg" style="height:' + h + 'px;font-size:' + ph + 'px">&#128663;</div>';
+}
+function render() {
+  var demo = mock ? ' <span style="color:var(--wn);font-size:11px">(demo)</span>' : "";
+  document.getElementById("rc").innerHTML = "<b>" + vehicles.length + "</b> veiculo" + (vehicles.length !== 1 ? "s" : "") + " encontrado" + (vehicles.length !== 1 ? "s" : "") + demo;
+  if (!vehicles.length) { document.getElementById("gc").innerHTML = '<div class="em"><h3>Nenhum veiculo encontrado</h3><p>Ajuste os filtros</p></div>'; return; }
+  var h = '<div class="grid">';
+  for (var i = 0; i < vehicles.length; i++) {
+    var v = vehicles[i];
+    var faved = favs.indexOf(v.id) > -1;
+    h += '<div class="card" onclick="om('' + v.id + '')">' + cimg(v,160,36) + '<div class="cb"><div class="ctop"><div class="cn">' + v.name + '</div><button class="fb" onclick="fv(event,'' + v.id + '')">' + (faved?"&#10084;&#65039;":"&#129293;") + '</button></div><div class="tags"><span class="tag ts">' + v.state + '</span>' + ctag(v.category) + (v.year?'<span class="tag ty">'+v.year+'</span>':"") + '</div><div class="mt2">&#127963; ' + v.auctioneer + '</div><div class="mt2">&#128197; ' + v.event_date + '</div></div></div>';
   }
-  render();
+  document.getElementById("gc").innerHTML = h + '</div>';
 }
-function ct(c){const m={Passeio:'tag-pass','Van/Carga':'tag-van','Caminhão':'tag-truck'};return'<span class="tag '+(m[c]||'tag-y')+'">'+c+'</span>'}
-function im(v,h,ph){if(v.image_url)return'<img class="card-img" src="'+v.image_url+'" style="height:'+h+'px" loading="lazy" onerror="this.style.display='none'">';return'<div class="card-img-ph" style="height:'+h+'px;font-size:'+ph+'px">🚗</div>'}
-function render(){
-  const rc=document.getElementById('rc');
-  rc.innerHTML='<strong>'+vehicles.length+'</strong> veículo'+(vehicles.length!==1?'s':'')+' encontrado'+(vehicles.length!==1?'s':'')+(mock?' <span style="color:var(--warn);font-size:11px">(demo)</span>':'');
-  if(!vehicles.length){document.getElementById('gc').innerHTML='<div class="empty"><h3>🚘 Nenhum veículo encontrado</h3><p>Tente ajustar os filtros</p></div>';return}
-  document.getElementById('gc').innerHTML='<div class="grid">'+vehicles.map((v,i)=>'<div class="card" style="animation-delay:'+(i*.04)+'s" onclick="om(''+v.id+'')">'+im(v,160,36)+'<div class="card-body"><div class="card-top"><div class="card-name">'+v.name+'</div><button class="fav-btn" onclick="fv(event,''+v.id+'')">'+(favs.includes(v.id)?'❤️':'🤍')+'</button></div><div class="card-tags"><span class="tag tag-state">'+v.state+'</span>'+ct(v.category)+(v.year?'<span class="tag tag-y">'+v.year+'</span>':'')+'</div><div class="meta">🏛 '+v.auctioneer+'</div><div class="meta">📅 '+v.event_date+'</div></div></div>').join('')+'</div>';
+function om(id) {
+  var v = null;
+  for (var i = 0; i < vehicles.length; i++) { if (vehicles[i].id === id) { v = vehicles[i]; break; } }
+  if (!v) return;
+  var url = v.auctioneer_url || "#";
+  var h = (v.image_url ? '<img class="mdi" src="' + v.image_url + '">' : '<div class="mni">&#128663;</div>');
+  h += '<div class="mbd"><div class="mhd"><div><div class="mtt">' + v.name + '</div><div class="tags" style="margin-top:8px"><span class="tag ts">' + v.state + '</span>' + ctag(v.category) + (v.year?'<span class="tag ty">'+v.year+'</span>':"") + '</div></div><button class="mcl" onclick="cm()">&#10005;</button></div>';
+  h += '<div class="min"><div class="ir"><span class="il">Leiloeiro</span><span class="iv">' + v.auctioneer + '</span></div><div class="ir"><span class="il">Data</span><span class="iv">' + v.event_date + '</span></div>' + (v.mileage?'<div class="ir"><span class="il">Km</span><span class="iv">' + v.mileage + '</span></div>':"") + '</div>';
+  if (v.description) h += '<div class="dsc">' + v.description + '</div>';
+  h += '<a href="' + url + '" target="_blank" class="be">&#128279; Ver Edital Oficial</a></div>';
+  document.getElementById("mc").innerHTML = h;
+  document.getElementById("mo").classList.add("open");
+  document.body.style.overflow = "hidden";
 }
-function om(id){
-  const v=vehicles.find(x=>x.id===id);if(!v)return;
-  const url=v.auctioneer_url||'#';
-  document.getElementById('mc').innerHTML=im(v,220,56)+'<div class="modal-body"><div class="modal-hdr"><div><div class="modal-title">'+v.name+'</div><div class="card-tags" style="margin-top:8px"><span class="tag tag-state">'+v.state+'</span>'+ct(v.category)+(v.year?'<span class="tag tag-y">'+v.year+'</span>':'')+'</div></div><button class="modal-close" onclick="cm()">✕</button></div><div class="modal-info">'+[['Leiloeiro',v.auctioneer],['Data',v.event_date],v.mileage?['Km',v.mileage]:null].filter(Boolean).map(([l,val])=>'<div class="info-row"><span class="info-label">'+l+'</span><span class="info-value">'+val+'</span></div>').join('')+'</div>'+(v.description?'<div class="modal-desc">'+v.description+'</div>':'')+'<a href="'+url+'" target="_blank" class="btn-edital">🔗 Ver Edital Oficial</a></div>';
-  document.getElementById('mo').classList.add('open');
-  document.body.style.overflow='hidden';
+function cm() { document.getElementById("mo").classList.remove("open"); document.body.style.overflow = ""; }
+function fv(e, id) {
+  e.stopPropagation();
+  var idx = favs.indexOf(id);
+  if (idx > -1) { favs.splice(idx,1); } else { favs.push(id); }
+  localStorage.setItem("favs", JSON.stringify(favs)); render();
 }
-function cm(){document.getElementById('mo').classList.remove('open');document.body.style.overflow=''}
-function fv(e,id){e.stopPropagation();favs=favs.includes(id)?favs.filter(f=>f!==id):[...favs,id];localStorage.setItem('favs',JSON.stringify(favs));render()}
-const states=['Todos',...[...new Set(MOCK.map(v=>v.state))].sort()];
-document.getElementById('sf').innerHTML=states.map(s=>'<div class="pill'+(s===uf?' active':'')+'" data-state="'+s+'">'+s+'</div>').join('');
-document.getElementById('sf').querySelectorAll('.pill').forEach(p=>p.addEventListener('click',()=>{uf=p.dataset.state;document.getElementById('sf').querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));p.classList.add('active');load()}));
-document.getElementById('cf').querySelectorAll('.pill').forEach(p=>p.addEventListener('click',()=>{cat=p.dataset.cat;document.getElementById('cf').querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));p.classList.add('active');load()}));
-document.getElementById('si').addEventListener('input',e=>{q=e.target.value.trim();clearTimeout(dt);dt=setTimeout(load,350)});
-document.getElementById('ft').addEventListener('click',()=>{fz=!fz;document.getElementById('ft').classList.toggle('active',fz);if(q)load()});
-document.getElementById('mo').addEventListener('click',e=>{if(e.target===document.getElementById('mo'))cm()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')cm()});
+var states = ["Todos"];
+for (var i = 0; i < MOCK.length; i++) { if (states.indexOf(MOCK[i].state) < 0) states.push(MOCK[i].state); }
+states.sort(function(a,b){ return a==="Todos"?-1:a.localeCompare(b); });
+var sfh = "";
+for (var i = 0; i < states.length; i++) { sfh += '<div class="pill' + (states[i]===uf?" on":"") + '" data-state="' + states[i] + '">' + states[i] + '</div>'; }
+document.getElementById("sf").innerHTML = sfh;
+document.getElementById("sf").querySelectorAll(".pill").forEach(function(p){ p.addEventListener("click",function(){ uf=p.dataset.state; document.getElementById("sf").querySelectorAll(".pill").forEach(function(x){x.classList.remove("on");}); p.classList.add("on"); load(); }); });
+document.getElementById("cf").querySelectorAll(".pill").forEach(function(p){ p.addEventListener("click",function(){ cat=p.dataset.cat; document.getElementById("cf").querySelectorAll(".pill").forEach(function(x){x.classList.remove("on");}); p.classList.add("on"); load(); }); });
+document.getElementById("inp").addEventListener("input",function(e){ q=e.target.value.trim(); clearTimeout(dt); dt=setTimeout(load,350); });
+document.getElementById("fzbtn").addEventListener("click",function(){ fz=!fz; document.getElementById("fzbtn").classList.toggle("on",fz); if(q)load(); });
+document.getElementById("mo").addEventListener("click",function(e){ if(e.target===document.getElementById("mo"))cm(); });
+document.addEventListener("keydown",function(e){ if(e.key==="Escape")cm(); });
 load();
 </script>
 </body>
