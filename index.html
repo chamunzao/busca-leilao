@@ -165,24 +165,39 @@ function render(){
   var demo=mock?' <span style="color:var(--wn);font-size:11px">(demo)</span>':"";
   document.getElementById("rc").innerHTML="<b>"+vehicles.length+"</b> veiculo"+(vehicles.length!==1?"s":"")+" encontrado"+(vehicles.length!==1?"s":"")+demo;
   if(!vehicles.length){document.getElementById("gc").innerHTML='<div class="em"><h3>Nenhum veiculo encontrado</h3><p>Ajuste os filtros</p></div>';return;}
-  var h='<div class="grid">';
+  var gc=document.getElementById("gc");
+  gc.innerHTML='<div class="grid" id="gridv"></div>';
+  var grid=document.getElementById("gridv");
   for(var i=0;i<vehicles.length;i++){
     var v=vehicles[i];
     var faved=favs.indexOf(v.id)>-1;
+    var card=document.createElement("div");
+    card.className="card";
+    card.setAttribute("data-vid",v.id);
     var im=v.image_url?'<img class="cimg" src="'+v.image_url+'" style="height:160px" loading="lazy">'
                       :'<div class="nimg">&#128663;</div>';
-    h+='<div class="card" onclick="om('"+v.id+"')">';
-    h+=im;
-    h+='<div class="cb"><div class="ctop"><div class="cn">'+v.name+'</div>';
-    h+='<button class="fb" onclick="fv(event,'"+v.id+"')">'+(faved?"&#10084;&#65039;":"&#129293;")+'</button></div>';
-    h+='<div class="tags"><span class="tag ts">'+v.state+'</span>'+ctag(v.category);
-    if(v.year)h+='<span class="tag ty">'+v.year+'</span>';
-    h+='</div>';
-    h+='<div class="mt2">&#127963; '+v.auctioneer+'</div>';
-    h+='<div class="mt2">&#128197; '+v.event_date+'</div>';
-    h+='</div></div>';
+    card.innerHTML=im+'<div class="cb"><div class="ctop"><div class="cn">'+v.name+'</div>'
+      +'<button class="fb" data-fid="'+v.id+'">'+(faved?"&#10084;&#65039;":"&#129293;")+'</button></div>'
+      +'<div class="tags"><span class="tag ts">'+v.state+'</span>'+ctag(v.category)
+      +(v.year?'<span class="tag ty">'+v.year+'</span>':"")+'</div>'
+      +'<div class="mt2">&#127963; '+v.auctioneer+'</div>'
+      +'<div class="mt2">&#128197; '+v.event_date+'</div>'
+      +'</div>';
+    card.addEventListener("click",function(e){
+      if(e.target.closest("[data-fid]")){
+        var btn=e.target.closest("[data-fid]");
+        var id=btn.getAttribute("data-fid");
+        e.stopPropagation();
+        var idx=favs.indexOf(id);
+        if(idx>-1){favs.splice(idx,1);}else{favs.push(id);}
+        localStorage.setItem("favs",JSON.stringify(favs));
+        render();
+        return;
+      }
+      om(this.getAttribute("data-vid"));
+    });
+    grid.appendChild(card);
   }
-  document.getElementById("gc").innerHTML=h+'</div>';
 }
 function om(id){
   var v=null;
