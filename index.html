@@ -2,226 +2,895 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>BuscaLeilao</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BuscaLeilÃ£o â€” VeÃ­culos em LeilÃ£o no Brasil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0e1a;--sf:#111827;--sf2:#1a2235;--ac:#3b7eff;--ac2:#00d4aa;--dg:#ff4757;--wn:#ffa502;--tx:#f0f4ff;--mt:#6b7a99;--br:rgba(255,255,255,0.07)}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
-header{position:sticky;top:0;z-index:100;background:rgba(10,14,26,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--br);padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-family:"Syne",sans-serif;font-weight:800;font-size:20px;color:var(--tx);display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--ac),var(--ac2));border-radius:10px;display:flex;align-items:center;justify-content:center}
-.sb{background:var(--sf);border:1px solid var(--br);border-radius:20px;padding:4px 12px;font-size:12px;color:var(--mt)}
-.sb span{color:var(--ac2);font-weight:600}
-.ob{background:rgba(255,165,2,.15);border:1px solid rgba(255,165,2,.3);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--wn);display:none}
-.ob.show{display:block}
-.hero{padding:60px 24px 40px;max-width:900px;margin:0 auto;text-align:center}
-.hero h1{font-family:"Syne",sans-serif;font-size:clamp(32px,6vw,52px);font-weight:800;line-height:1.1;margin-bottom:16px}
-.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--ac),var(--ac2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{color:var(--mt);font-size:16px;margin-bottom:36px}
-.sw{position:relative;max-width:640px;margin:0 auto 32px}
-.sbar{width:100%;background:var(--sf);border:1px solid var(--br);border-radius:16px;padding:16px 130px 16px 52px;font-size:15px;color:var(--tx);font-family:"DM Sans",sans-serif;outline:none}
-.sbar::placeholder{color:var(--mt)}
-.sbar:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(59,126,255,.15)}
-.sico{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--mt);font-size:18px;pointer-events:none}
-.fzt{position:absolute;right:12px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:8px;background:var(--sf2);border:1px solid var(--br);border-radius:10px;padding:6px 12px;cursor:pointer;user-select:none}
-.fzt.on{background:rgba(59,126,255,.15);border-color:rgba(59,126,255,.4)}
-.fzl{font-size:11px;font-weight:600;color:var(--mt)}
-.fzt.on .fzl{color:var(--ac)}
-.fzd{width:6px;height:6px;border-radius:50%;background:var(--mt)}
-.fzt.on .fzd{background:var(--ac)}
-.filters{max-width:900px;margin:0 auto 32px;padding:0 24px}
-.fr{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-.flb{font-size:11px;color:var(--mt);text-transform:uppercase;letter-spacing:.08em;font-weight:500;margin-bottom:8px}
-.pill{padding:7px 16px;border-radius:20px;border:1px solid var(--br);background:var(--sf);color:var(--mt);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:"DM Sans",sans-serif;transition:all .15s}
-.pill.on{background:var(--ac);border-color:var(--ac);color:#fff}
-.pill.pv.on{background:#f59e0b;border-color:#f59e0b}
-.pill.pk.on{background:var(--dg);border-color:var(--dg)}
-.pill.pp.on{background:var(--ac2);border-color:var(--ac2);color:#0a0e1a}
-main{max-width:900px;margin:0 auto;padding:0 24px 80px}
-#rc{font-size:13px;color:var(--mt);margin-bottom:20px}
-#rc b{color:var(--tx)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.card{background:var(--sf);border:1px solid var(--br);border-radius:18px;overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s}
-.card:hover{transform:translateY(-4px);border-color:rgba(59,126,255,.3);box-shadow:0 12px 40px rgba(0,0,0,.4)}
-.cimg{width:100%;height:160px;object-fit:cover;display:block}
-.nimg{width:100%;height:160px;background:var(--sf2);display:flex;align-items:center;justify-content:center;font-size:36px}
-.cb{padding:14px 16px 16px}
-.ctop{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px}
-.cn{font-family:"Syne",sans-serif;font-weight:700;font-size:15px;line-height:1.3;color:var(--tx)}
-.fb{background:none;border:none;cursor:pointer;font-size:18px;padding:2px;opacity:.7;line-height:1;flex-shrink:0}
-.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-.tag{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
-.ts{background:rgba(59,126,255,.15);color:var(--ac)}
-.tp{background:rgba(0,212,170,.12);color:var(--ac2)}
-.tv{background:rgba(245,158,11,.15);color:#f59e0b}
-.tk{background:rgba(255,71,87,.12);color:var(--dg)}
-.ty{background:var(--sf2);color:var(--mt)}
-.mt2{font-size:12px;color:var(--mt);margin-bottom:3px}
-.mo{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:24px}
-.mo.open{display:flex}
-.md{background:var(--sf);border:1px solid var(--br);border-radius:24px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto}
-.mdi{width:100%;height:220px;object-fit:cover;border-radius:24px 24px 0 0;display:block}
-.mni{width:100%;height:220px;background:var(--sf2);display:flex;align-items:center;justify-content:center;font-size:56px;border-radius:24px 24px 0 0}
-.mbd{padding:24px}
-.mhd{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
-.mtt{font-family:"Syne",sans-serif;font-weight:800;font-size:20px}
-.mcl{background:var(--sf2);border:1px solid var(--br);border-radius:10px;width:36px;height:36px;cursor:pointer;color:var(--mt);font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.min2{background:var(--sf2);border-radius:14px;padding:16px;margin-bottom:16px}
-.ir{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--br);font-size:13px}
-.ir:last-child{border-bottom:none}
-.il{color:var(--mt)}
-.iv{font-weight:500;color:var(--tx)}
-.dsc{font-size:13px;color:var(--mt);line-height:1.6;margin-bottom:20px;padding:14px;background:var(--sf2);border-radius:12px}
-.be{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px;background:linear-gradient(135deg,var(--ac),#2563eb);border:none;border-radius:14px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;font-family:"DM Sans",sans-serif}
-.ld{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 0;gap:16px;color:var(--mt)}
-.sp{width:36px;height:36px;border:3px solid var(--br);border-top-color:var(--ac);border-radius:50%;animation:spin .7s linear infinite}
-.em{text-align:center;padding:80px 0;color:var(--mt)}
-.em h3{font-family:"Syne",sans-serif;color:var(--tx);margin-bottom:8px}
-@keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:600px){.hero{padding:40px 16px 28px}.filters{padding:0 16px}main{padding:0 16px 60px}.grid{grid-template-columns:1fr}}
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --accent: #3b7eff;
+    --accent2: #00d4aa;
+    --danger: #ff4757;
+    --warn: #ffa502;
+    --text: #f0f4ff;
+    --muted: #6b7a99;
+    --border: rgba(255,255,255,0.07);
+    --card-hover: rgba(59,126,255,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* â”€â”€ GRID BG â”€â”€ */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(59,126,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,126,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* â”€â”€ HEADER â”€â”€ */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,14,26,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 34px;
+    height: 34px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .header-stats {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .stat-badge {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .stat-badge span {
+    color: var(--accent2);
+    font-weight: 600;
+  }
+
+  .offline-badge {
+    background: rgba(255,165,2,0.15);
+    border: 1px solid rgba(255,165,2,0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11px;
+    color: var(--warn);
+    display: none;
+  }
+
+  .offline-badge.show { display: block; }
+
+  /* â”€â”€ HERO â”€â”€ */
+  .hero {
+    position: relative;
+    z-index: 1;
+    padding: 60px 24px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(59,126,255,0.1);
+    border: 1px solid rgba(59,126,255,0.25);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 20px;
+    animation: fadeDown 0.5s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+    animation: fadeDown 0.5s 0.1s ease both;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero p {
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 36px;
+    animation: fadeDown 0.5s 0.2s ease both;
+  }
+
+  /* â”€â”€ SEARCH BAR â”€â”€ */
+  .search-wrap {
+    position: relative;
+    max-width: 640px;
+    margin: 0 auto 32px;
+    animation: fadeDown 0.5s 0.3s ease both;
+  }
+
+  .search-bar {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 140px 16px 52px;
+    font-size: 15px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .search-bar::placeholder { color: var(--muted); }
+
+  .search-bar:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(59,126,255,0.15);
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 18px;
+    pointer-events: none;
+  }
+
+  .fuzzy-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .fuzzy-toggle.active {
+    background: rgba(59,126,255,0.15);
+    border-color: rgba(59,126,255,0.4);
+  }
+
+  .fuzzy-label {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace, sans-serif;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .fuzzy-toggle.active .fuzzy-label { color: var(--accent); }
+
+  .fuzzy-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+    transition: background 0.2s;
+  }
+
+  .fuzzy-toggle.active .fuzzy-dot { background: var(--accent); }
+
+  /* â”€â”€ FILTERS â”€â”€ */
+  .filters {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto 32px;
+    padding: 0 24px;
+    animation: fadeDown 0.5s 0.4s ease both;
+  }
+
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .filter-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .pill {
+    padding: 7px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .pill:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+
+  .pill.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  .pill.cat-van.active  { background: #f59e0b; border-color: #f59e0b; }
+  .pill.cat-truck.active { background: var(--danger); border-color: var(--danger); }
+  .pill.cat-pass.active { background: var(--accent2); border-color: var(--accent2); color: #0a0e1a; }
+
+  /* â”€â”€ MAIN CONTENT â”€â”€ */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  .results-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .results-count {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .results-count strong { color: var(--text); }
+
+  /* â”€â”€ VEHICLE GRID â”€â”€ */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  /* â”€â”€ CARD â”€â”€ */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59,126,255,0.3);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  }
+
+  .card-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+    background: var(--surface2);
+  }
+
+  .card-img-placeholder {
+    width: 100%;
+    height: 160px;
+    background: var(--surface2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    color: var(--muted);
+  }
+
+  .card-body { padding: 14px 16px 16px; }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .card-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  .fav-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 2px;
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: opacity 0.15s, transform 0.15s;
+    line-height: 1;
+  }
+
+  .fav-btn:hover { opacity: 1; transform: scale(1.2); }
+
+  .card-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .tag {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .tag-state { background: rgba(59,126,255,0.15); color: var(--accent); }
+  .tag-pass  { background: rgba(0,212,170,0.12); color: var(--accent2); }
+  .tag-van   { background: rgba(245,158,11,0.15); color: #f59e0b; }
+  .tag-truck { background: rgba(255,71,87,0.12); color: var(--danger); }
+  .tag-year  { background: var(--surface2); color: var(--muted); }
+
+  .card-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* â”€â”€ MODAL â”€â”€ */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: scaleIn 0.2s ease;
+  }
+
+  .modal-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 24px 24px 0 0;
+    display: block;
+  }
+
+  .modal-img-placeholder {
+    width: 100%;
+    height: 220px;
+    background: var(--surface2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 56px;
+    border-radius: 24px 24px 0 0;
+  }
+
+  .modal-body { padding: 24px; }
+
+  .modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .modal-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  .modal-close {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+
+  .modal-close:hover { background: var(--border); color: var(--text); }
+
+  .modal-info {
+    background: var(--surface2);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .info-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .info-row:first-child { padding-top: 0; }
+
+  .info-label { color: var(--muted); }
+  .info-value { font-weight: 500; color: var(--text); }
+
+  .modal-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    padding: 14px;
+    background: var(--surface2);
+    border-radius: 12px;
+  }
+
+  .btn-edital {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--accent), #2563eb);
+    border: none;
+    border-radius: 14px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+
+  .btn-edital:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* â”€â”€ LOADING â”€â”€ */
+  .loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 0;
+    gap: 16px;
+    color: var(--muted);
+  }
+
+  .spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  /* â”€â”€ EMPTY â”€â”€ */
+  .empty {
+    text-align: center;
+    padding: 80px 0;
+    color: var(--muted);
+  }
+
+  .empty-icon { font-size: 48px; margin-bottom: 16px; }
+  .empty h3 { font-family: 'Syne', sans-serif; color: var(--text); margin-bottom: 8px; }
+
+  /* â”€â”€ ANIMATIONS â”€â”€ */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* â”€â”€ RESPONSIVE â”€â”€ */
+  @media (max-width: 600px) {
+    .hero { padding: 40px 16px 28px; }
+    .filters { padding: 0 16px; }
+    main { padding: 0 16px 60px; }
+    .header-stats { display: none; }
+    .grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
+
+<!-- HEADER -->
 <header>
-  <a href="#" class="logo"><div class="logo-icon">&#128269;</div>BuscaLeilao</a>
-  <div style="display:flex;align-items:center;gap:12px">
-    <div class="sb">API <span id="as">...</span></div>
-    <div class="ob" id="ob">offline</div>
+  <a href="#" class="logo">
+    <div class="logo-icon">ðŸ”</div>
+    BuscaLeilÃ£o
+  </a>
+  <div class="header-stats">
+    <div class="stat-badge">API <span id="api-status">â€¢â€¢â€¢</span></div>
+    <div class="offline-badge" id="offline-badge">âš¡ modo offline</div>
   </div>
 </header>
+
+<!-- HERO -->
 <div class="hero">
-  <h1>Encontre seu proximo<br><em>veiculo em leilao</em></h1>
-  <p>Busca inteligente em leiloeiros de todo o Brasil.</p>
-  <div class="sw">
-    <span class="sico">&#128269;</span>
-    <input class="sbar" id="inp" type="text" placeholder="Buscar veiculo, leiloeiro...">
-    <div class="fzt on" id="fzbtn"><div class="fzd"></div><span class="fzl">~fuzzy</span></div>
+  <div class="hero-label">ðŸ‡§ðŸ‡· LeilÃµes de VeÃ­culos no Brasil</div>
+  <h1>Encontre seu prÃ³ximo<br><em>veÃ­culo em leilÃ£o</em></h1>
+  <p>Busca inteligente em leiloeiros de todo o Brasil.<br>Carros, vans e caminhÃµes em um sÃ³ lugar.</p>
+
+  <div class="search-wrap">
+    <span class="search-icon">ðŸ”</span>
+    <input class="search-bar" id="search-input" type="text"
+      placeholder="Buscar veÃ­culo, leiloeiro...">
+    <div class="fuzzy-toggle active" id="fuzzy-toggle" title="Busca aproximada">
+      <div class="fuzzy-dot"></div>
+      <span class="fuzzy-label">~fuzzy</span>
+    </div>
   </div>
 </div>
+
+<!-- FILTERS -->
 <div class="filters">
-  <div class="flb">Categoria</div>
-  <div class="fr" id="cf">
-    <div class="pill on" data-cat="Todos">Todos</div>
-    <div class="pill pp" data-cat="Passeio">Passeio</div>
-    <div class="pill pv" data-cat="Van/Carga">Van/Carga</div>
-    <div class="pill pk" data-cat="Caminhao">Caminhao</div>
+  <div class="filter-label">Categoria</div>
+  <div class="filter-row" id="cat-filters">
+    <div class="pill active" data-cat="Todos">Todos</div>
+    <div class="pill cat-pass" data-cat="Passeio">ðŸš— Passeio</div>
+    <div class="pill cat-van" data-cat="Van/Carga">ðŸš Van/Carga</div>
+    <div class="pill cat-truck" data-cat="CaminhÃ£o">ðŸš› CaminhÃ£o</div>
   </div>
-  <div class="flb" style="margin-top:14px">Estado</div>
-  <div class="fr" id="sf"></div>
+
+  <div class="filter-label" style="margin-top:14px">Estado (UF)</div>
+  <div class="filter-row" id="state-filters"></div>
 </div>
+
+<!-- MAIN -->
 <main>
-  <div id="rc">Carregando...</div>
-  <div id="gc"><div class="ld"><div class="sp"></div><span>Buscando...</span></div></div>
+  <div class="results-header">
+    <div class="results-count" id="results-count">Carregando...</div>
+  </div>
+  <div id="grid-container">
+    <div class="loading"><div class="spinner"></div><span>Buscando veÃ­culos...</span></div>
+  </div>
 </main>
-<div class="mo" id="mo"><div class="md"><div id="mc"></div></div></div>
-<script type="text/javascript">
-var API="https://api-production-e1c0.up.railway.app";
-var MOCK=[
-{id:"1",name:"Ford Fusion 2.0 Titanium",auctioneer:"Leiloes Lopa",auctioneer_url:"https://lopa.com.br",event_date:"20/04/2025",state:"SP",category:"Passeio",year:"2019",mileage:"62000 km",description:"Motor em bom estado.",image_url:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600"},
-{id:"2",name:"Mercedes Sprinter 415",auctioneer:"Mega Leiloes",auctioneer_url:"https://megaleiloes.com.br",event_date:"22/04/2025",state:"RS",category:"Van/Carga",year:"2020",mileage:"138000 km",description:"Bau refrigerado.",image_url:"https://images.unsplash.com/photo-1612534847738-b3af9bc82f2b?w=600"},
-{id:"3",name:"Toyota Hilux SRX 4x4",auctioneer:"Brasil Leiloes",auctioneer_url:"https://brasilleiloes.com.br",event_date:"25/04/2025",state:"MG",category:"Passeio",year:"2021",mileage:"45000 km",description:"Pneus novos.",image_url:"https://images.unsplash.com/photo-1559416523-140ddc3d238c?w=600"},
-{id:"4",name:"VW Constellation 24.280",auctioneer:"Brasil Leiloes",auctioneer_url:"https://brasilleiloes.com.br",event_date:"07/05/2025",state:"BA",category:"Caminhao",year:"2016",mileage:"410000 km",description:"Motor revisado.",image_url:"https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600"},
-{id:"5",name:"Ford Cargo 1723",auctioneer:"Mega Leiloes",auctioneer_url:"https://megaleiloes.com.br",event_date:"10/05/2025",state:"SP",category:"Caminhao",year:"2015",mileage:"520000 km",description:"Truck graneis."},
-{id:"6",name:"Honda HR-V EXL",auctioneer:"Lance Certo",auctioneer_url:"https://lancecerto.com.br",event_date:"30/04/2025",state:"RJ",category:"Passeio",year:"2022",mileage:"28000 km",description:"Seminovo.",image_url:"https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=600"},
-{id:"7",name:"Renault Master Furgao",auctioneer:"Arremate Facil",auctioneer_url:"https://arrematefacil.com.br",event_date:"12/05/2025",state:"SC",category:"Van/Carga",year:"2019",mileage:"195000 km",description:"Furgao longo.",image_url:"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600"}
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal">
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+const API = 'https://api-production-e1c0.up.railway.app';
+
+const MOCK = [
+  { id:'1', name:'Ford Fusion 2.0 Titanium', auctioneer:'LeilÃµes Lopa', auctioneer_url:'https://lopa.com.br', event_date:'20/04/2025', state:'SP', category:'Passeio', year:'2019', mileage:'62000 km', description:'Motor e cÃ¢mbio em bom estado.', image_url:'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&q=70' },
+  { id:'2', name:'Mercedes Sprinter 415 CDI', auctioneer:'Mega LeilÃµes', auctioneer_url:'https://megaleiloes.com.br', event_date:'22/04/2025', state:'RS', category:'Van/Carga', year:'2020', mileage:'138000 km', description:'Sprinter com baÃº refrigerado.', image_url:'https://images.unsplash.com/photo-1612534847738-b3af9bc82f2b?w=600&q=70' },
+  { id:'3', name:'Toyota Hilux SRX 4x4', auctioneer:'Brasil LeilÃµes', auctioneer_url:'https://brasilleiloes.com.br', event_date:'25/04/2025', state:'MG', category:'Passeio', year:'2021', mileage:'45000 km', description:'Pneus novos. Sem restriÃ§Ãµes.', image_url:'https://images.unsplash.com/photo-1559416523-140ddc3d238c?w=600&q=70' },
+  { id:'4', name:'VW Constellation 24.280', auctioneer:'Brasil LeilÃµes', auctioneer_url:'https://brasilleiloes.com.br', event_date:'07/05/2025', state:'BA', category:'CaminhÃ£o', year:'2016', mileage:'410000 km', description:'Motor revisado.', image_url:'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600&q=70' },
+  { id:'5', name:'Ford Cargo 1723', auctioneer:'Mega LeilÃµes', auctioneer_url:'https://megaleiloes.com.br', event_date:'10/05/2025', state:'SP', category:'CaminhÃ£o', year:'2015', mileage:'520000 km', description:'Truck com implemento para granÃ©is.' },
+  { id:'6', name:'Honda HR-V EXL CVT', auctioneer:'Lance Certo', auctioneer_url:'https://lancecerto.com.br', event_date:'30/04/2025', state:'RJ', category:'Passeio', year:'2022', mileage:'28000 km', description:'HR-V seminovo. Ãšnico dono.', image_url:'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=600&q=70' },
+  { id:'7', name:'Renault Master 2.3 FurgÃ£o', auctioneer:'Arremate FÃ¡cil', auctioneer_url:'https://arrematefacil.com.br', event_date:'12/05/2025', state:'SC', category:'Van/Carga', year:'2019', mileage:'195000 km', description:'Master furgÃ£o longo.', image_url:'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&q=70' },
 ];
-var vehicles=[],favs=JSON.parse(localStorage.getItem("favs")||"[]"),mock=false,cat="Todos",uf="Todos",fz=true,q="",dt;
-function load(){
-  document.getElementById("gc").innerHTML='<div class="ld"><div class="sp"></div><span>Buscando...</span></div>';
-  var p=new URLSearchParams();
-  if(q)p.set("q",q);
-  if(uf!=="Todos")p.set("state",uf);
-  if(cat!=="Todos")p.set("category",cat);
-  p.set("fuzzy",fz);p.set("page_size","50");
-  fetch(API+"/vehicles/?"+p)
-    .then(function(r){if(!r.ok)throw 0;return r.json();})
-    .then(function(d){
-      vehicles=d.results;mock=false;
-      document.getElementById("as").textContent="online";
-      document.getElementById("as").style.color="#00d4aa";
-      document.getElementById("ob").classList.remove("show");
-      render();
-    })
-    .catch(function(){
-      mock=true;
-      document.getElementById("as").textContent="offline";
-      document.getElementById("as").style.color="#ffa502";
-      document.getElementById("ob").classList.add("show");
-      var lq=q.toLowerCase();
-      vehicles=MOCK.filter(function(v){
-        return (cat==="Todos"||v.category===cat)&&(uf==="Todos"||v.state===uf)&&(!lq||v.name.toLowerCase().indexOf(lq)>-1);
-      });
-      render();
-    });
-}
-function ctag(c){var m={Passeio:"tp","Van/Carga":"tv",Caminhao:"tk"};return'<span class="tag '+(m[c]||"ty")+'">'+c+'</span>';}
-function render(){
-  var demo=mock?' <span style="color:var(--wn);font-size:11px">(demo)</span>':"";
-  document.getElementById("rc").innerHTML="<b>"+vehicles.length+"</b> veiculo"+(vehicles.length!==1?"s":"")+" encontrado"+(vehicles.length!==1?"s":"")+demo;
-  if(!vehicles.length){document.getElementById("gc").innerHTML='<div class="em"><h3>Nenhum veiculo encontrado</h3><p>Ajuste os filtros</p></div>';return;}
-  var h='<div class="grid">';
-  for(var i=0;i<vehicles.length;i++){
-    var v=vehicles[i];
-    var faved=favs.indexOf(v.id)>-1;
-    var imgHtml=v.image_url?'<img class="cimg" src="'+v.image_url+'" style="height:160px" loading="lazy">'
-                            :'<div class="nimg">&#128663;</div>';
-    h+='<div class="card" onclick="om(''+v.id+'')">';
-    h+=imgHtml;
-    h+='<div class="cb"><div class="ctop"><div class="cn">'+v.name+'</div>';
-    h+='<button class="fb" onclick="fv(event,''+v.id+'')">'+(faved?"&#10084;":"&#9825;")+'</button></div>';
-    h+='<div class="tags"><span class="tag ts">'+v.state+'</span>'+ctag(v.category);
-    if(v.year)h+='<span class="tag ty">'+v.year+'</span>';
-    h+='</div><div class="mt2">&#127963; '+v.auctioneer+'</div><div class="mt2">&#128197; '+v.event_date+'</div>';
-    h+='</div></div>';
+
+// State
+let vehicles = [];
+let favorites = JSON.parse(localStorage.getItem('favs') || '[]');
+let usingMock = false;
+let selectedCat = 'Todos';
+let selectedState = 'Todos';
+let fuzzy = true;
+let searchQ = '';
+let debounceTimer;
+let allStates = [];
+
+// â”€â”€ API â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+async function fetchVehicles() {
+  const qs = new URLSearchParams();
+  if (searchQ) qs.set('q', searchQ);
+  if (selectedState !== 'Todos') qs.set('state', selectedState);
+  if (selectedCat !== 'Todos') qs.set('category', selectedCat);
+  qs.set('fuzzy', fuzzy);
+  qs.set('page_size', '50');
+
+  try {
+    const res = await fetch(`${API}/vehicles/?${qs}`);
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    vehicles = data.results;
+    usingMock = false;
+    document.getElementById('api-status').textContent = 'âœ“ online';
+    document.getElementById('api-status').style.color = '#00d4aa';
+    document.getElementById('offline-badge').classList.remove('show');
+    return vehicles;
+  } catch {
+    usingMock = true;
+    document.getElementById('api-status').textContent = 'âš  offline';
+    document.getElementById('api-status').style.color = '#ffa502';
+    document.getElementById('offline-badge').classList.add('show');
+    vehicles = filterMock();
+    return vehicles;
   }
-  document.getElementById("gc").innerHTML=h+'</div>';
 }
-function om(id){
-  var v=null;
-  for(var i=0;i<vehicles.length;i++){if(vehicles[i].id===id){v=vehicles[i];break;}}
-  if(!v)return;
-  var imgHtml=v.image_url?'<img class="mdi" src="'+v.image_url+'">'
-                          :'<div class="mni">&#128663;</div>';
-  var h=imgHtml+'<div class="mbd"><div class="mhd"><div><div class="mtt">'+v.name+'</div>';
-  h+='<div class="tags" style="margin-top:8px"><span class="tag ts">'+v.state+'</span>'+ctag(v.category);
-  if(v.year)h+='<span class="tag ty">'+v.year+'</span>';
-  h+='</div></div><button class="mcl" onclick="cm()">&#10005;</button></div>';
-  h+='<div class="min2">';
-  h+='<div class="ir"><span class="il">Leiloeiro</span><span class="iv">'+v.auctioneer+'</span></div>';
-  h+='<div class="ir"><span class="il">Data</span><span class="iv">'+v.event_date+'</span></div>';
-  if(v.mileage)h+='<div class="ir"><span class="il">Km</span><span class="iv">'+v.mileage+'</span></div>';
-  h+='</div>';
-  if(v.description)h+='<div class="dsc">'+v.description+'</div>';
-  h+='<a href="'+(v.auctioneer_url||"#")+'" target="_blank" class="be">&#128279; Ver Edital Oficial</a></div>';
-  document.getElementById("mc").innerHTML=h;
-  document.getElementById("mo").classList.add("open");
-  document.body.style.overflow="hidden";
+
+function filterMock() {
+  const q = searchQ.toLowerCase();
+  return MOCK.filter(v => {
+    const matchCat = selectedCat === 'Todos' || v.category === selectedCat;
+    const matchState = selectedState === 'Todos' || v.state === selectedState;
+    const matchQ = !q || v.name.toLowerCase().includes(q) || v.auctioneer.toLowerCase().includes(q);
+    return matchCat && matchState && matchQ;
+  });
 }
-function cm(){document.getElementById("mo").classList.remove("open");document.body.style.overflow="";}
-function fv(e,id){
+
+// â”€â”€ RENDER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function catTag(cat) {
+  const map = { Passeio:'tag-pass', 'Van/Carga':'tag-van', 'CaminhÃ£o':'tag-truck' };
+  return `<span class="tag ${map[cat]||'tag-year'}">${cat}</span>`;
+}
+
+function imgOrPlaceholder(v, height=160, ph=36) {
+  if (v.image_url) {
+    return `<img class="card-img" src="${v.image_url}" alt="${v.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" style="height:${height}px">
+            <div class="card-img-placeholder" style="height:${height}px;display:none;font-size:${ph}px">ðŸš—</div>`;
+  }
+  return `<div class="card-img-placeholder" style="height:${height}px;font-size:${ph}px">ðŸš—</div>`;
+}
+
+function renderGrid(list) {
+  const container = document.getElementById('grid-container');
+  const count = document.getElementById('results-count');
+
+  count.innerHTML = `<strong>${list.length}</strong> veÃ­culo${list.length!==1?'s':''} encontrado${list.length!==1?'s':''}${usingMock?' <span style="color:var(--warn);font-size:11px">(dados de demonstraÃ§Ã£o)</span>':''}`;
+
+  if (!list.length) {
+    container.innerHTML = `<div class="empty"><div class="empty-icon">ðŸš˜</div><h3>Nenhum veÃ­culo encontrado</h3><p>Tente ajustar os filtros ou a busca</p></div>`;
+    return;
+  }
+
+  container.innerHTML = `<div class="grid">${list.map((v, i) => `
+    <div class="card" style="animation-delay:${i*0.04}s" onclick="openModal('${v.id}')">
+      ${imgOrPlaceholder(v)}
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-name">${v.name}</div>
+          <button class="fav-btn" onclick="toggleFav(event,'${v.id}')">${favorites.includes(v.id)?'â¤ï¸':'ðŸ¤'}</button>
+        </div>
+        <div class="card-tags">
+          <span class="tag tag-state">${v.state}</span>
+          ${catTag(v.category)}
+          ${v.year?`<span class="tag tag-year">${v.year}</span>`:''}
+          ${v.mileage?`<span class="tag tag-year">${v.mileage}</span>`:''}
+        </div>
+        <div class="card-meta">
+          <div class="meta-row">ðŸ› ${v.auctioneer}</div>
+          <div class="meta-row">ðŸ“… ${v.event_date}</div>
+        </div>
+      </div>
+    </div>`).join('')}</div>`;
+}
+
+// â”€â”€ MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function openModal(id) {
+  const v = vehicles.find(x => x.id === id);
+  if (!v) return;
+  const url = v.auctioneer_url || v.auctioneerUrl || '#';
+
+  document.getElementById('modal-content').innerHTML = `
+    ${imgOrPlaceholder(v, 220, 56)}
+    <div class="modal-body">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">${v.name}</div>
+          <div class="card-tags" style="margin-top:8px">
+            <span class="tag tag-state">${v.state}</span>
+            ${catTag(v.category)}
+            ${v.year?`<span class="tag tag-year">${v.year}</span>`:''}
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeModal()">âœ•</button>
+      </div>
+      <div class="modal-info">
+        ${[['Leiloeiro',v.auctioneer],['Data do evento',v.event_date],v.mileage?['Quilometragem',v.mileage]:null].filter(Boolean).map(([l,val])=>`
+          <div class="info-row"><span class="info-label">${l}</span><span class="info-value">${val}</span></div>`).join('')}
+      </div>
+      ${v.description?`<div class="modal-desc">${v.description}</div>`:''}
+      <a href="${url}" target="_blank" rel="noopener" class="btn-edital">ðŸ”— Ver Edital Oficial</a>
+    </div>`;
+
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// â”€â”€ FAVORITES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function toggleFav(e, id) {
   e.stopPropagation();
-  var idx=favs.indexOf(id);
-  if(idx>-1){favs.splice(idx,1);}else{favs.push(id);}
-  localStorage.setItem("favs",JSON.stringify(favs));render();
+  favorites = favorites.includes(id)
+    ? favorites.filter(f => f !== id)
+    : [...favorites, id];
+  localStorage.setItem('favs', JSON.stringify(favorites));
+  renderGrid(vehicles);
 }
-var states=["Todos"];
-for(var i=0;i<MOCK.length;i++){if(states.indexOf(MOCK[i].state)<0)states.push(MOCK[i].state);}
-states.sort(function(a,b){return a==="Todos"?-1:a.localeCompare(b);});
-var sfh="";
-for(var i=0;i<states.length;i++){sfh+='<div class="pill'+(states[i]===uf?" on":"")+'" data-state="'+states[i]+'">'+states[i]+'</div>';}
-document.getElementById("sf").innerHTML=sfh;
-document.getElementById("sf").querySelectorAll(".pill").forEach(function(p){
-  p.addEventListener("click",function(){uf=p.dataset.state;document.getElementById("sf").querySelectorAll(".pill").forEach(function(x){x.classList.remove("on");});p.classList.add("on");load();});
+
+// â”€â”€ STATE PILLS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function buildStatePills() {
+  const states = ['Todos', ...Array.from(new Set(MOCK.map(v => v.state))).sort()];
+  allStates = states;
+  const container = document.getElementById('state-filters');
+  container.innerHTML = states.map(s =>
+    `<div class="pill${s===selectedState?' active':''}" data-state="${s}">${s}</div>`
+  ).join('');
+  container.querySelectorAll('.pill').forEach(p => {
+    p.addEventListener('click', () => {
+      selectedState = p.dataset.state;
+      container.querySelectorAll('.pill').forEach(x => x.classList.remove('active'));
+      p.classList.add('active');
+      load();
+    });
+  });
+}
+
+// â”€â”€ MAIN LOAD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+async function load() {
+  document.getElementById('grid-container').innerHTML =
+    '<div class="loading"><div class="spinner"></div><span>Buscando...</span></div>';
+  const list = await fetchVehicles();
+  renderGrid(list);
+}
+
+// â”€â”€ EVENTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+document.getElementById('search-input').addEventListener('input', e => {
+  searchQ = e.target.value.trim();
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(load, 350);
 });
-document.getElementById("cf").querySelectorAll(".pill").forEach(function(p){
-  p.addEventListener("click",function(){cat=p.dataset.cat;document.getElementById("cf").querySelectorAll(".pill").forEach(function(x){x.classList.remove("on");});p.classList.add("on");load();});
+
+document.getElementById('fuzzy-toggle').addEventListener('click', () => {
+  fuzzy = !fuzzy;
+  document.getElementById('fuzzy-toggle').classList.toggle('active', fuzzy);
+  if (searchQ) load();
 });
-document.getElementById("inp").addEventListener("input",function(e){q=e.target.value.trim();clearTimeout(dt);dt=setTimeout(load,350);});
-document.getElementById("fzbtn").addEventListener("click",function(){fz=!fz;document.getElementById("fzbtn").classList.toggle("on",fz);if(q)load();});
-document.getElementById("mo").addEventListener("click",function(e){if(e.target===document.getElementById("mo"))cm();});
-document.addEventListener("keydown",function(e){if(e.key==="Escape")cm();});
+
+document.getElementById('cat-filters').querySelectorAll('.pill').forEach(p => {
+  p.addEventListener('click', () => {
+    selectedCat = p.dataset.cat;
+    document.getElementById('cat-filters').querySelectorAll('.pill').forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+    load();
+  });
+});
+
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+});
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// â”€â”€ INIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+buildStatePills();
 load();
 </script>
 </body>
