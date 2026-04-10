@@ -170,7 +170,7 @@ function render(){
     var faved=favs.indexOf(v.id)>-1;
     var im=v.image_url?'<img class="cimg" src="'+v.image_url+'" style="height:160px" loading="lazy">'
                       :'<div class="nimg">&#128663;</div>';
-    h+='<div class="card" onclick="om(''+v.id+'')">';
+    h+='<div class="card" onclick="om('"+v.id+"')">';
     h+=im;
     h+='<div class="cb"><div class="ctop"><div class="cn">'+v.name+'</div>';
     h+='<button class="fb" onclick="fv(event,'"+v.id+"')">'+(faved?"&#10084;&#65039;":"&#129293;")+'</button></div>';
